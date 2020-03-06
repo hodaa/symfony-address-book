@@ -84,14 +84,8 @@ class AddressBook
 
 
     /**
-     * @ORM\Column(type="string", length=100)
-     *
-     * @Assert\Image(
-     *     minWidth = 200,
-     *     maxWidth = 400,
-     *     minHeight = 200,
-     *     maxHeight = 400
-     * )
+     * @ORM\Column(type="string", length=100, nullable=true)
+     * nulla
      */
 
     private $picture;

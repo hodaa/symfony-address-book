@@ -56,8 +56,13 @@
                             <th>{{ item.phoneNumber }}</th>
                             <th>{{ item.birthday }}</th>
                             <th>{{ item.email }}</th>
-                            <th><img  width="70" height="70"
-                                      src="{{ asset('uploads/images/')}}{{ item.picture }}" /></th>
+
+                            <th>
+                                {%  if (item.picture) %}
+                                <img  width="70" height="70"
+                                      src="{{ asset('uploads/images/')}}{{ item.picture }}"  />
+                                {%  endif %}
+                            </th>
                             <td><a href="/edit_address_book/{{item.id}}" class="btn btn-primary  btn-sm">   <i class="fas fa-edit"></i></a>
                                 <form method="post" action="{{ path('delete_address_book', {'id': item.id}) }}">
                                     <input type="hidden" name="_method" value="DELETE"   />
