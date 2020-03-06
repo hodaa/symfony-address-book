@@ -93,13 +93,13 @@ class AddressBookController extends AbstractController
         return $this->redirectToRoute('address_book');
     }
 
-
     /**
      * @Route("/edit_address_book/{id}", name="edit_address_book",methods="get")
      * @param $productId
      * @return Response
      */
-    public function showAction($id) :Response
+
+    public function showAction($id): Response
     {
         $book = $this->addressBookRepository->find($id);
 
@@ -153,7 +153,7 @@ class AddressBookController extends AbstractController
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction($id) :Response
+    public function deleteAction($id): Response
     {
         if (!$this->addressBookRepository->find($id)) {
             throw $this->createNotFoundException(
