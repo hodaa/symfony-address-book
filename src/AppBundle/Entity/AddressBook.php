@@ -79,7 +79,9 @@ class AddressBook
      *  @Assert\Email(
      *     message = "The email '{{ value }}' is not a valid email."
      * )
-     */
+     *
+     **/
+
     private $email;
 
 
@@ -218,10 +220,12 @@ class AddressBook
 
     /**
      * @param $email
+     * @return $this
      */
     public function setEmail($email)
     {
         $this->email = $email;
+        return $this;
     }
 
     /**

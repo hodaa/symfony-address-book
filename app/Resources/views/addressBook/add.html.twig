@@ -1,16 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h2>Adding new address book</h2>
-    <ul>
-        {% if errors is defined %}
-            {% for error in errors %}
-                <div class="alert alert-danger" role="alert">{{ error }}</div>
-            {% endfor %}
-        {%  endif %}
-    </ul>
+
 
     <div id="container" class="col-md-10">
+        <h2>Adding new address book</h2>
+        <ul>
+            {% if errors is defined %}
+                {% for error in errors %}
+                    <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+            {%  endif %}
+        </ul>
+
 
         <form class="form-horizontal" name="address_book_form" method="post" action="/store_address_book" enctype="multipart/form-data">
      <input type="hidden" name="token" value="{{ csrf_token('add_address') }}" />

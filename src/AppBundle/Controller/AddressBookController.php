@@ -41,7 +41,7 @@ class AddressBookController extends AbstractController
     {
         $currentPage = $request->query->getInt('page') ?: 1;
         $query   =   $this->addressBookRepository->listAll();
-        $results = $pagination->paginate($query, $currentPage, 10);
+        $results = $pagination->paginate($query, $currentPage, 5);
 
 
         return $this->render('addressBook/index.html.twig', [
@@ -49,6 +49,7 @@ class AddressBookController extends AbstractController
             'lastPage' => $pagination->lastPage($results),
             'total' => $pagination->total($results),
             'thisPage' => $currentPage,
+            'maxPages' => $pagination->getMaxPages($results)
 
         ]);
     }
@@ -71,6 +72,7 @@ class AddressBookController extends AbstractController
     {
         if ($this->isCsrfTokenValid('add_address', $request->request->get('token'))) {
             $inputs = $formatterService->format($request);
+
             $errors = $validator->validateInput($inputs);
 
             if (count($errors) > 0) {
@@ -153,6 +155,11 @@ class AddressBookController extends AbstractController
      */
     public function deleteAction($id) :Response
     {
+        if (!$this->addressBookRepository->find($id)) {
+            throw $this->createNotFoundException(
+                'No Address book found for id ' . $id
+            );
+        }
         $this->addFlash('success', 'Item Deleted Successfully!');
         $this->addressBookRepository->remove($id);
         return $this->redirectToRoute('address_book');

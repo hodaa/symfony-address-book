@@ -10,13 +10,6 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AddressBookRepository extends EntityRepository
 {
-    private $em;
-
-    public function __construct($em, Mapping\ClassMetadata $class)
-    {
-        parent::__construct($em, $class);
-        $this->em = $em;
-    }
 
     public function store($inputs)
     {
@@ -31,7 +24,6 @@ class AddressBookRepository extends EntityRepository
         }
 
 
-
         $this->_em->persist($address_book);
         $this->_em->flush();
     }
@@ -43,7 +35,7 @@ class AddressBookRepository extends EntityRepository
      */
     public function listAll()
     {
-        $developers = $this->em->getRepository(AddressBook::class);
+        $developers = $this->_em->getRepository(AddressBook::class);
 
         // build the query for the doctrine paginator
         $query = $developers->createQueryBuilder('u')
@@ -85,13 +77,13 @@ class AddressBookRepository extends EntityRepository
     {
         $address_book->setFirstName($data['first_name']);
         $address_book->setLastName($data['last_name']);
-        $address_book->setEmail($data['email']);
         $address_book->setStreet($data['street']);
-        $address_book->setBirthday($data['birthday']);
         $address_book->setZip($data['zip']);
         $address_book->setCity($data['city']);
         $address_book->setCountry($data['country']);
         $address_book->setPhoneNumber($data['phone_number']);
+        $address_book->setEmail($data['email']);
+        $address_book->setBirthday($data['birthday']);
     }
     public function remove($id)
     {
