@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use AppBundle\Service\PaginationService;
-use AppBundle\Service\ValidationService;
 use AppBundle\Service\FileUploader;
 
 class AddressBookController extends Controller
@@ -61,16 +60,15 @@ class AddressBookController extends Controller
      */
     public function addAction(Request $request, FileUploader $fileUploader): Response
     {
-
         $addressBook = new AddressBook();
         $form = $this->createForm(AddressBookType::class, $addressBook);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $picture = $form->get('picture')->getData();
-
             if ($picture) {
-                $brochureFileName = $fileUploader->upload($picture);
+                $picture = $fileUploader->upload($picture);
                 $addressBook->setPicture($picture);
             }
 
@@ -109,7 +107,6 @@ class AddressBookController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $picture = $form->get('picture')->getData();
-
             if ($picture) {
                 $brochureFileName = $fileUploader->upload($picture);
                 $addressBook->setPicture($brochureFileName);

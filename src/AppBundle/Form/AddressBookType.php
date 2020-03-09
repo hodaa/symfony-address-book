@@ -21,7 +21,7 @@ use Symfony\Component\Form\FormInterface;
 use AppBundle\Repository\AddressBook\CityRepository;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\Validator\Constraints\Image;
 
 class AddressBookType extends AbstractType
 {
@@ -48,10 +48,18 @@ class AddressBookType extends AbstractType
             ])
             ->add('zip', TextType::class)
             ->add('street', TextType::class)
-            ->add('picture', FileType::class, [
+            ->add(
+                'picture',
+                FileType::class,
+                [
                 'required' => false,
                 'data_class' => null,
-                ])
+                'mapped' => false,
+                'constraints' => [
+                    new Image(),
+                    ],
+                ]
+            )
 
             ->add('save', SubmitType::class)
             ->getForm();
