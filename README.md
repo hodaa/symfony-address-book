@@ -18,7 +18,7 @@ The address book contain the following data:
 
 ```
 composer install
-php bin/console doctrine:schema:update
+php bin/console doctrine:schema:update --force
 bin/console doctrine:fixtures:load
 ```
 
@@ -30,6 +30,8 @@ bin/console doctrine:fixtures:load
 
 ## Testing 
 ```
-bin/console doctrine:schema:update --env=test
+bin/console doctrine:schema:update --force --env=test
 bin/console doctrine:fixtures:load --env=test
+vendor/bin/simple-phpunit
+
 ```
