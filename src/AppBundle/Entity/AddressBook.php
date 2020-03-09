@@ -114,7 +114,7 @@ class AddressBook
      *
      * @Assert\Image(
      *     minWidth = 100,
-     *     maxWidth = 800,
+     *     maxWidth = 1000,
      * )
      **/
     private $picture;

@@ -17,5 +17,5 @@
 /web/bundles/
 app/test_sqlite.db
 .phpunit.result.cache
-app/sqlite.db
+/app/sqlite.db
 web/uploads/images
