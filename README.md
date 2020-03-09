@@ -27,7 +27,7 @@ bin/console doctrine:fixtures:load
 * Twig
 * PHP 7.0
 
-##testing 
+## Testing 
 ```
 bin/console doctrine:schema:update --env=test
 bin/console doctrine:fixtures:load --env=test
