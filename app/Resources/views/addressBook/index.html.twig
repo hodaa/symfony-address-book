@@ -52,9 +52,9 @@
                             <th>{{ item.street }}</th>
                             <th>{{ item.zip }}</th>
                             <th>{{ item.country }}</th>
-                            <th>{{ item.city }}</th>
+                            <th>{{ item.city.name}}</th>
                             <th>{{ item.phoneNumber }}</th>
-                            <th>{{ item.birthday }}</th>
+                            <th>{{ item.birthday |date('d-m-Y')}}</th>
                             <th>{{ item.email }}</th>
 
                             <th>
@@ -80,7 +80,8 @@
                 </table>
                 <div>Total Number Record {{ total }}</div>
              </div>
-            {%  if lastPage != 1 %}
+
+            {%  if lastPage > 1 %}
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-end">
 

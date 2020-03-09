@@ -5,6 +5,8 @@ namespace  AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * AppBundle\Entity\User
@@ -15,6 +17,12 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class AddressBook
 {
+    public function __construct()
+    {
+        $this->city = new ArrayCollection();
+    }
+
+    const NUMBER_OF_ITEMS = 10;
 
     /**
      * @ORM\Column(type="integer")
@@ -28,7 +36,7 @@ class AddressBook
      * @ORM\Column(type="string", length=100)
      *
      * @Assert\NotBlank(
-     * message = "The first name should not be empty ."
+     * message = "First name should not be empty ."
      * )
      */
     private $firstName;
@@ -36,41 +44,57 @@ class AddressBook
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank(
-     *  message = "The last name should not be empty ."
+     *  message = "Last name should not be empty ."
      * )
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\NotBlank
+     * @Assert\NotBlank(
+     *      message = "Street should not be empty ."
+     *     )
      */
     private $street;
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Assert\Length(max = 5)
+     * @Assert\Length(max = 5, min =5)
      *
      */
     private $zip;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="address_book")
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     private $city;
+
     /**
      * @ORM\Column(type="string", length=100)
-     */
+     *  @Assert\NotBlank(
+     *      message = "Country should not be empty ."
+     *     )
+     *
+     * @Assert\Country
+     **/
+
 
     private $country;
     /**
      * @ORM\Column(type="string", length=100)
+     *  @Assert\NotBlank(
+     *      message = "Phone Number should not be empty ."
+     *     )
+     * @Assert\Length(min = 8, max = 20, minMessage = "Phone Number is inavlid",
+     *     maxMessage = "Phone Number is inavlid")
      */
     private $phoneNumber;
+
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="date", length=100)
      * @Assert\Date
-     * @var string A "Y-m-d" formatted value
+     * @Assert\LessThan("today")
      */
     private $birthday;
 
@@ -87,10 +111,14 @@ class AddressBook
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
-     * nulla
-     */
-
+     *
+     * @Assert\Image(
+     *     minWidth = 100,
+     *     maxWidth = 800,
+     * )
+     **/
     private $picture;
+
 
     /**
      * @return mixed
@@ -128,6 +156,7 @@ class AddressBook
      */
     public function getCity()
     {
+
         return $this->city;
     }
 
@@ -212,10 +241,12 @@ class AddressBook
 
     /**
      * @param $birthday
+     * @return AddressBook
      */
     public function setBirthday($birthday)
     {
         $this->birthday = $birthday;
+        return $this;
     }
 
     /**
@@ -229,6 +260,7 @@ class AddressBook
     }
 
     /**
+     *
      * @param File $picture
      * @return $this
      */
@@ -240,7 +272,7 @@ class AddressBook
     }
 
     /**
-     * @param $city
+     * @param $city_id
      */
     public function setCity($city)
     {

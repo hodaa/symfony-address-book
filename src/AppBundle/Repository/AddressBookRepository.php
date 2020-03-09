@@ -10,21 +10,15 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class AddressBookRepository extends EntityRepository
 {
-
+    /**
+     * @param $inputs
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function store($inputs)
     {
-        $address_book = new AddressBook();
-        $this->setData($address_book, $inputs);
 
-        if ($inputs['picture'] !==null) {
-            $root = realpath(__DIR__. '/../../../');
-            $upload = new FileUploader($root . '/web/uploads/images');
-            $pictureName = $upload->upload($inputs['picture']);
-            $address_book->setPicture($pictureName);
-        }
-
-
-        $this->_em->persist($address_book);
+        $this->_em->persist($inputs);
         $this->_em->flush();
     }
 
@@ -47,44 +41,9 @@ class AddressBookRepository extends EntityRepository
 
     /**
      * @param $id
-     * @param $data
-     * @param $file
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function update($id, $data)
-    {
-        $address_book = $this->find($id);
-        $this->setData($address_book, $data);
-
-        if ($data['picture'] !== null) {
-            $root = realpath(__DIR__. '/../../../');
-            $upload = new FileUploader($root . '/web/uploads/images');
-            $pictureName = $upload->upload($data['picture']);
-            $address_book->setPicture($pictureName);
-        }
-
-
-        $this->_em->persist($address_book);
-        $this->_em->flush();
-    }
-
-    /**
-     * @param $address_book
-     * @param $data
-     */
-    public function setData($address_book, $data)
-    {
-        $address_book->setFirstName($data['first_name']);
-        $address_book->setLastName($data['last_name']);
-        $address_book->setStreet($data['street']);
-        $address_book->setZip($data['zip']);
-        $address_book->setCity($data['city']);
-        $address_book->setCountry($data['country']);
-        $address_book->setPhoneNumber($data['phone_number']);
-        $address_book->setEmail($data['email']);
-        $address_book->setBirthday($data['birthday']);
-    }
     public function remove($id)
     {
         $addressBook = $this->find($id);

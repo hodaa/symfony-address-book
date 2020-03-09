@@ -18,6 +18,8 @@ Picture (optional)
 ```
 composer install
 php bin/console doctrine:schema:update
+bin/console doctrine:fixtures:load
+
 ```
 
 
