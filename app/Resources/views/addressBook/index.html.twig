@@ -43,6 +43,11 @@
                     </tr>
                     </thead>
                     <tbody>
+                    {%  if addresses is empty %}
+                    <tr>
+                        <td  class="sf-toolbar " colspan="12">There is no records</td>
+                    </tr>
+                    {% endif %}
                     {% for item in addresses %}
 
                         <tr>
